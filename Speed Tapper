@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Tap Game</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+        h1 { color: #007bff; }
+        h2 { color: #333; }
+        button { padding: 15px 30px; font-size: 20px; margin-top: 20px; background: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <h1>Fast Tap Game</h1>
+    <h2>Score: <span id="score">0</span></h2>
+    <button id="tapButton">Tap Me!</button>
+
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.expand();  // Full-screen mode
+        
+        let score = 0;
+        document.getElementById("tapButton").addEventListener("click", () => {
+            score++;
+            document.getElementById("score").innerText = score;
+
+            // Every 10 taps, send score to Telegram bot
+            if (score % 10 === 0) {
+                tg.sendData(JSON.stringify({ score: score }));
+            }
+        });
+    </script>
+</body>
+</html>
